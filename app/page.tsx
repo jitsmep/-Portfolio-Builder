@@ -17,16 +17,16 @@ export default function Home() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex w-full min-h-screen bg-background">
       {/* Editor Pane */}
       {!isFullscreen && (
-        <div className="w-[400px] flex-shrink-0 h-full border-r border-white/10 overflow-y-auto bg-black/5 backdrop-blur-xl z-50">
+        <div className="w-[400px] flex-shrink-0 h-screen sticky top-0 border-r border-white/10 overflow-y-auto bg-black/5 backdrop-blur-xl z-50">
           <EditorSidebar onToggleFullscreen={() => setIsFullscreen(true)} />
         </div>
       )}
 
       {/* Preview Pane */}
-      <div className="flex-1 h-full overflow-y-auto relative bg-background">
+      <div className="flex-1 w-full relative bg-background">
         {isFullscreen && (
           <Button 
             className="fixed bottom-6 right-6 z-50 rounded-full shadow-2xl px-6 py-6"
@@ -38,7 +38,7 @@ export default function Home() {
         )}
         <div className={`w-full transform origin-top left-0 ${!isFullscreen ? "min-w-[800px]" : ""}`}>
           <Navbar />
-          <div className="flex flex-col gap-0 w-full overflow-hidden pt-20">
+          <div className="flex flex-col gap-0 w-full pt-20">
             <Hero />
             <About />
             <Projects />

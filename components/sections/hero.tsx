@@ -25,6 +25,20 @@ export function Hero() {
           Available for new opportunities
         </motion.div>
 
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          {data.personal.avatar && (
+            <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden border-4 border-white/10 shadow-2xl mb-6">
+              {/* Using standard img instead of Next Image to easily support base64 without complex domain config */}
+              <img src={data.personal.avatar} alt="Profile" className="w-full h-full object-cover" />
+            </div>
+          )}
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

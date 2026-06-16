@@ -43,6 +43,7 @@ export type PortfolioData = {
     bio: string;
     email: string;
     resumeUrl: string;
+    avatar?: string;
     socials: {
       github: string;
       linkedin: string;

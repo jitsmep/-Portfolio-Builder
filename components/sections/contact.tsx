@@ -2,9 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Send } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useBuilder } from "@/context/BuilderContext";
 
 export function Contact() {
@@ -18,59 +16,34 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="mb-12 md:mb-20 text-center"
+          className="max-w-3xl mx-auto text-center bg-black/5 dark:bg-white/5 backdrop-blur-xl p-12 rounded-3xl border border-black/10 dark:border-white/10"
         >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-6" />
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi, 
-            I&apos;ll try my best to get back to you!
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6">Get In Touch</h2>
+          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-8" />
+          
+          <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
+            I&apos;m currently open to new opportunities. Whether you have a question, a project proposal, 
+            or just want to say hi, I&apos;ll try my best to get back to you!
           </p>
+          
           {data.personal.email && (
-            <a href={`mailto:${data.personal.email}`} className="text-primary hover:underline mt-4 inline-block font-medium">
-              {data.personal.email}
+            <a href={`mailto:${data.personal.email}`}>
+              <Button size="lg" className="rounded-full px-8 group">
+                <Mail className="mr-2 w-5 h-5" />
+                Say Hello
+              </Button>
             </a>
           )}
+          
+          {data.personal.email && (
+            <div className="mt-6 text-sm text-muted-foreground">
+              Or email me directly at: <br />
+              <a href={`mailto:${data.personal.email}`} className="text-primary hover:underline font-medium mt-2 inline-block text-lg">
+                {data.personal.email}
+              </a>
+            </div>
+          )}
         </motion.div>
-
-        <div className="max-w-xl mx-auto">
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-6 bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/10"
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Message sent! (Mock)");
-            }}
-          >
-            <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium">Name</label>
-              <Input id="name" placeholder="John Doe" className="bg-white/5 border-white/10" required />
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">Email</label>
-              <Input id="email" type="email" placeholder="john@example.com" className="bg-white/5 border-white/10" required />
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="message" className="text-sm font-medium">Message</label>
-              <Textarea 
-                id="message" 
-                placeholder="Hello..." 
-                className="bg-white/5 border-white/10 min-h-[120px] resize-none" 
-                required 
-              />
-            </div>
-            
-            <Button type="submit" className="w-full group">
-              Send Message
-              <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </Button>
-          </motion.form>
-        </div>
       </div>
     </section>
   );

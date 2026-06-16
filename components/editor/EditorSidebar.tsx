@@ -67,6 +67,32 @@ export function EditorSidebar({ onToggleFullscreen }: EditorSidebarProps) {
             <TabsContent value="personal" className="space-y-6 mt-0">
               <div className="space-y-4">
                 <div className="space-y-2">
+                  <Label>Profile Picture</Label>
+                  <div className="flex gap-2 items-center">
+                    <Button variant="outline" onClick={() => document.getElementById('avatar-upload')?.click()}>
+                      Upload Image
+                    </Button>
+                    <input 
+                      id="avatar-upload"
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                          updatePersonal({ avatar: event.target?.result as string });
+                        };
+                        reader.readAsDataURL(file);
+                      }} 
+                    />
+                    {data.personal.avatar && (
+                      <Button variant="ghost" className="text-red-500" onClick={() => updatePersonal({ avatar: "" })}>Remove</Button>
+                    )}
+                  </div>
+                </div>
+                <div className="space-y-2">
                   <Label>Full Name</Label>
                   <Input 
                     value={data.personal.name} 
