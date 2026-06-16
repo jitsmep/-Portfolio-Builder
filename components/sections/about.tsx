@@ -11,11 +11,14 @@ export function About() {
 
   // Helper to dynamically render react-icons/si if they match the string name
   const renderIcon = (iconName: string) => {
+    if (iconName.startsWith("data:image")) {
+      return <img src={iconName} className="w-4 h-4 mr-2 object-contain inline-block" alt="" />;
+    }
     const IconComponent = (Icons as any)[iconName];
     if (IconComponent) {
-      return <IconComponent className="w-4 h-4 mr-2" />;
+      return <IconComponent className="w-4 h-4 mr-2 inline-block" />;
     }
-    return <FaCode className="w-4 h-4 mr-2" />;
+    return <FaCode className="w-4 h-4 mr-2 inline-block" />;
   };
 
   return (
