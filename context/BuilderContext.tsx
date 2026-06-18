@@ -79,10 +79,28 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
     }
   });
   const [mounted, setMounted] = useState(false);
+  const isReadOnly = React.useRef(false);
 
-  // Load from localStorage on mount
+  // Load from localStorage or URL on mount
   useEffect(() => {
     setMounted(true);
+
+    if (window.location.pathname === '/view') {
+      isReadOnly.current = true;
+      const params = new URLSearchParams(window.location.search);
+      const encodedData = params.get("data");
+      
+      if (encodedData) {
+        try {
+          const decoded = decodeURIComponent(escape(atob(encodedData)));
+          setData(JSON.parse(decoded));
+          return; // Skip loading from localStorage
+        } catch (e) {
+          console.error("Failed to parse URL data");
+        }
+      }
+    }
+
     const saved = localStorage.getItem("portfolioBuilderData");
     if (saved) {
       try {
@@ -95,7 +113,7 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
 
   // Save to localStorage whenever data changes
   useEffect(() => {
-    if (mounted) {
+    if (mounted && !isReadOnly.current) {
       localStorage.setItem("portfolioBuilderData", JSON.stringify(data));
     }
   }, [data, mounted]);

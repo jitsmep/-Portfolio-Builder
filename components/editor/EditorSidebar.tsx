@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Maximize2, Download, Upload, Plus, Trash, Image as ImageIcon } from "lucide-react";
 import React, { useRef } from "react";
+import { ShareDialog } from "./ShareDialog";
 
 interface EditorSidebarProps {
   onToggleFullscreen?: () => void;
@@ -45,6 +46,7 @@ export function EditorSidebar({ onToggleFullscreen }: EditorSidebarProps) {
               <Maximize2 className="w-4 h-4" />
             </Button>
           )}
+          <ShareDialog />
           <Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()} title="Import JSON">
             <Upload className="w-4 h-4" />
           </Button>

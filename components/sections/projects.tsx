@@ -66,12 +66,17 @@ export function Projects() {
                 <Card className="glass-card h-full flex flex-col overflow-hidden group border-white/10">
                   <div className="relative h-48 w-full overflow-hidden">
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                        <span className="text-white/20 text-sm">No image</span>
+                      </div>
+                    )}
                   </div>
                   <CardHeader>
                     <div className="flex justify-between items-start mb-2">
