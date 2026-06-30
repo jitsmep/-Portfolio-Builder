@@ -64,6 +64,7 @@ interface BuilderContextType {
   updateSkills: (skills: Skill[]) => void;
   updateProjects: (projects: Project[]) => void;
   updateExperience: (experience: Experience[]) => void;
+  updateBlog: (blog: BlogPost[]) => void;
   exportData: () => void;
   importData: (importedData: PortfolioData) => void;
 }
@@ -147,6 +148,10 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
     setData((prev) => ({ ...prev, experience }));
   };
 
+  const updateBlog = (blog: BlogPost[]) => {
+    setData((prev) => ({ ...prev, blog }));
+  };
+
   const exportData = () => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(data, null, 2)
@@ -163,7 +168,7 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <BuilderContext.Provider
-      value={{ data, setData, updatePersonal, updateSocials, updateSkills, updateProjects, updateExperience, exportData, importData }}
+      value={{ data, setData, updatePersonal, updateSocials, updateSkills, updateProjects, updateExperience, updateBlog, exportData, importData }}
     >
       {children}
     </BuilderContext.Provider>

@@ -17,7 +17,7 @@ interface EditorSidebarProps {
 }
 
 export function EditorSidebar({ onToggleFullscreen }: EditorSidebarProps) {
-  const { data, updatePersonal, updateSocials, updateSkills, updateProjects, updateExperience, exportData, importData } = useBuilder();
+  const { data, updatePersonal, updateSocials, updateSkills, updateProjects, updateExperience, updateBlog, exportData, importData } = useBuilder();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -382,6 +382,71 @@ export function EditorSidebar({ onToggleFullscreen }: EditorSidebarProps) {
                       }]);
                     }}>
                       <Plus className="w-4 h-4 mr-2" /> Add Experience
+                    </Button>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="blog">
+                  <AccordionTrigger>Blog</AccordionTrigger>
+                  <AccordionContent className="space-y-4">
+                    {data.blog.map((post, index) => (
+                      <div key={post.id || index} className="space-y-3 border border-white/10 p-3 rounded-md relative">
+                        <Button variant="ghost" size="icon" className="absolute top-2 right-2 text-red-500" onClick={() => {
+                          const newBlog = data.blog.filter((_, i) => i !== index);
+                          updateBlog(newBlog);
+                        }}>
+                          <Trash className="w-4 h-4" />
+                        </Button>
+                        <div className="pr-8">
+                          <Label>Title</Label>
+                          <Input value={post.title} onChange={e => {
+                            const newBlog = [...data.blog];
+                            newBlog[index].title = e.target.value;
+                            updateBlog(newBlog);
+                          }} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <Label>Date</Label>
+                            <Input value={post.date} onChange={e => {
+                              const newBlog = [...data.blog];
+                              newBlog[index].date = e.target.value;
+                              updateBlog(newBlog);
+                            }} />
+                          </div>
+                          <div>
+                            <Label>Read Time</Label>
+                            <Input value={post.readTime} onChange={e => {
+                              const newBlog = [...data.blog];
+                              newBlog[index].readTime = e.target.value;
+                              updateBlog(newBlog);
+                            }} />
+                          </div>
+                        </div>
+                        <Label>Excerpt</Label>
+                        <Textarea rows={3} value={post.excerpt} onChange={e => {
+                          const newBlog = [...data.blog];
+                          newBlog[index].excerpt = e.target.value;
+                          updateBlog(newBlog);
+                        }} />
+                        <Label>Link (URL)</Label>
+                        <Input value={post.link} onChange={e => {
+                          const newBlog = [...data.blog];
+                          newBlog[index].link = e.target.value;
+                          updateBlog(newBlog);
+                        }} />
+                      </div>
+                    ))}
+                    <Button variant="outline" className="w-full" onClick={() => {
+                      updateBlog([...data.blog, {
+                        id: `blog-${Date.now()}`,
+                        title: "New Blog Post",
+                        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+                        readTime: "5 min read",
+                        excerpt: "A brief description of the blog post...",
+                        link: "#"
+                      }]);
+                    }}>
+                      <Plus className="w-4 h-4 mr-2" /> Add Blog Post
                     </Button>
                   </AccordionContent>
                 </AccordionItem>
